@@ -86,12 +86,6 @@ d <- d %>%
         mutate(sex = ifelse(h_sex_dv == 1, "Male", "Female")) %>%
         mutate(agegr = cut(h_age_dv, breaks=c(15, 25, 40, 55, 70, Inf), labels=c("16-25","26-40","41-55", "56-70", "over 70"))
         )
-
-## Checking
-
-d1 <- d %>% 
-        select(h_eumem, EU, h_sex_dv, sex, h_age_dv, agegr)
-
 ```
 
 ## Summarise data (20 points)
