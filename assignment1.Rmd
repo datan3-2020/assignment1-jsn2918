@@ -1,6 +1,6 @@
 ---
 title: "Statistical assignment 1"
-author: "Jenson Wong Chun Hin 670034697"
+author: "Jenson Wong 670034697"
 date: "2/2/2020"
 output: github_document
 ---
@@ -34,29 +34,29 @@ d <- d %>%
 ```
 
 
-```{R}
+``` {r}
 ## Checking
 
 colnames(d)
-
 ```
+
 
 ## Filter observations (10 points)
 
 To make nationally representative estimates from the Understanding Society data we would need to use weight coefficients. There are many different types of weight coefficients that can be used depending on the question and the level of analysis (see the User Guide, pp. 65-71). We will not do this in this assignment. However, what we want to do is to keep data from the original Understanding Society sample only (ukhls gb 2009-10), dropping  data for Northern Ireland, the BHPS cohort members and ethnic minority boost samples. This will make data closer to be representative for Great Britain. You need to choose the observations where *h_memorig* has the value of 1.
 
-```{r}
+``` {r}
 d <- d %>%
         filter(!h_memorig == "1")
 ```
 
 
-```{r}
+``` {r}
 ## Checking
 
 d[d$h_memorig == 1,]
-
 ```
+
 
 ## Recode data (20 points)
 
@@ -78,7 +78,7 @@ We want to do the following:
 
 In all cases, we want to create new variables.
 
-```{r}
+``` {r}
 d <- d %>%
         filter(!h_eumem == "-9", !h_eumem == "-8", !h_eumem == "-7", !h_eumem == "-2", !h_eumem == "-1") %>% 
         mutate(EU = ifelse(h_eumem == 1, 1, 0 )
@@ -86,18 +86,29 @@ d <- d %>%
         mutate(sex = ifelse(h_sex_dv == 1, "Male", "Female")) %>%
         mutate(agegr = cut(h_age_dv, breaks=c(15, 25, 40, 55, 70, Inf), labels=c("16-25","26-40","41-55", "56-70", "over 70"))
         )
+
 ```
+
+
+```{R}
+
+## Checking
+
+d1 <- d %>% 
+        select(h_eumem, EU, h_sex_dv, sex, h_age_dv, agegr)
+```
+
 
 ## Summarise data (20 points)
 
 Let us **dplyr** to calculate how many people in the sample supported Remain and Leave, both as absolute numbers and percentages.
 
-```{r}
+``` {r}
 d %>%
   group_by(EU) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n))
-  
+
 ```
 
 Write a couple of sentences with the interpretation of this result. How this compares with the result of the 2016 referendum? Why?
@@ -109,23 +120,13 @@ There were a greater number of people who supported remain than before, as the r
 Now let us look at the support for Leave and Remain by sex and age. Use your newly created variables.
 
 
-```{r}
+``` {r}
 d %>%
   group_by(sex, EU) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n))  
 
 ```
-
-
-```{r}
-d %>%
-  group_by(agegr, EU) %>%
-  summarise(n = n()) %>% 
-  mutate(freq = n / sum(n))  
-        
-```
-
 
 Write a couple of sentences interpreting your results.
 

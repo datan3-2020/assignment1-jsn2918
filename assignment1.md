@@ -1,6 +1,6 @@
 Statistical assignment 1
 ================
-Jenson Wong Chun Hin 670034697
+Jenson Wong 670034697
 2/2/2020
 
 Open data (10 points)
@@ -135,6 +135,13 @@ d <- d %>%
         )
 ```
 
+``` r
+## Checking
+
+d1 <- d %>% 
+        select(h_eumem, EU, h_sex_dv, sex, h_age_dv, agegr)
+```
+
 Summarise data (20 points)
 --------------------------
 
@@ -177,28 +184,6 @@ d %>%
     ## 2 Female     1  5073 0.669
     ## 3 Male       0  2380 0.381
     ## 4 Male       1  3859 0.619
-
-``` r
-d %>%
-  group_by(agegr, EU) %>%
-  summarise(n = n()) %>% 
-  mutate(freq = n / sum(n))  
-```
-
-    ## # A tibble: 10 x 4
-    ## # Groups:   agegr [5]
-    ##    agegr      EU     n  freq
-    ##    <fct>   <dbl> <int> <dbl>
-    ##  1 16-25       0   457 0.204
-    ##  2 16-25       1  1781 0.796
-    ##  3 26-40       0  1074 0.314
-    ##  4 26-40       1  2342 0.686
-    ##  5 41-55       0  1407 0.365
-    ##  6 41-55       1  2443 0.635
-    ##  7 56-70       0  1214 0.435
-    ##  8 56-70       1  1578 0.565
-    ##  9 over 70     0   735 0.483
-    ## 10 over 70     1   788 0.517
 
 Write a couple of sentences interpreting your results.
 
